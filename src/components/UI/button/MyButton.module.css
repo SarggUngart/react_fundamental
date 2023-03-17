@@ -1,0 +1,17 @@
+.myBtn {
+    padding: 5px 15px;
+    color: teal;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid teal;
+    cursor: pointer;
+}
+
+.myBtn:disabled {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.myBtn:active {
+    scale: 0.98;
+}
