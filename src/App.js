@@ -2,11 +2,10 @@ import React, {createRef} from "react";
 import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
-import MySelect from "./components/UI/select/MySelect";
-import MyInput from "./components/UI/input/MyInput";
 import PostFilter from "./components/PostFilter";
 import MyModal from "./components/UI/modal/MyModal";
 import MyButton from "./components/UI/button/MyButton";
+import {usePosts} from "./styles/usePost";
 
 function App() {
   
@@ -35,22 +34,12 @@ function App() {
       title: 'Redux',
       body: 'Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
       nodeRef: createRef()
-    },]
+    }]
   )
   
   const [filter, setFilter] = React.useState({sort: '', find: ''})
   const [modal, setModal] = React.useState(false)
-  
-  const sortedPosts = React.useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-    }
-    return posts
-  }, [filter.sort, posts])
-  
-  const sortedAndSearchedPosts = React.useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.find.toLowerCase()))
-  }, [filter.find, sortedPosts])
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.find)
   
   const createPost = (newPost) => {
     if (!newPost.title || !newPost.body) return
