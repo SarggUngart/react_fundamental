@@ -3,6 +3,7 @@ import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 
 function App() {
   
@@ -27,9 +28,22 @@ function App() {
   )
   
   const [selectedSort, setSelectedSort] = React.useState('')
+  const [search, setSearch] = React.useState('')
   
+  
+  const sortedPosts = React.useMemo(() => {
+    if (selectedSort) {
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    }
+    return posts
+  }, [selectedSort, posts])
+  
+  const sortedAndSearchedPosts = React.useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(search.toLowerCase()))
+  }, [search, sortedPosts])
   
   const createPost = (newPost) => {
+    if (!newPost.title || !newPost.body) return
     setPosts(prev => [...prev, newPost])
   }
   
@@ -37,30 +51,36 @@ function App() {
     setPosts(posts.filter(p => p.id !== post.id))
   }
   
-  const sortPost = (sort) => {
+  const sortPosts = (sort) => {
     setSelectedSort(sort)
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
   }
   
-  return (<div className="App">
-    <PostForm create={createPost}/>
-    <hr style={{margin: '20px 0'}}/>
-    <MySelect
-      value={selectedSort}
-      onChange={sortPost}
-      defaultValue={'sort by'}
-      options={[
-        {value: 'title', name: 'by title'},
-        {value: 'body', name: 'by description'}
-      ]
-      }/>
-    {posts.length
-      ?
-      <PostList remove={removePost} posts={posts} title={'My posts'}/>
-      :
-      <h1 style={{textAlign: 'center'}}>Посты не обнаруженны</h1>
-    }
-  </div>);
+  return (
+    <div className="App">
+      
+      <PostForm create={createPost}/>
+      <hr style={{margin: '20px 0'}}/>
+      
+      
+      <MyInput
+        placeholder={'Search'}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      
+      <MySelect
+        value={selectedSort}
+        onChange={sortPosts}
+        defaultValue='sort by'
+        options={[{value: 'title', name: 'by title'},
+          {value: 'body', name: 'by description'}]}/>
+      {posts.length
+        ?
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title={'My posts'}/>
+        :
+        <h1 style={{textAlign: 'center'}}>Посты не обнаруженны</h1>
+      }
+    </div>);
 }
 
 export default App;

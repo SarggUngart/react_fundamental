@@ -3,15 +3,16 @@ import React from 'react';
 const MySelect = ({options, defaultValue, value, onChange}) => {
   return (
     <select
+      style={{padding: "5px 10px"}}
       value={value}
-      onChange={e => onChange(e.target.value)}
-    >
+      onChange={event => onChange(event.target.value)}
+      >
       <option value='' hidden>{defaultValue}</option>
-      {options.map(o => {
-        return (<option key={o.value} value={o.value}>
+      {options.map(o =>
+        <option key={o.value} value={o.value}>
           {o.name}
-        </option>)
-      })}f
+        </option>
+      )}
     </select>
   );
 };

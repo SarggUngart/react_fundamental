@@ -23,7 +23,6 @@ const PostForm = ({create}) => {
     setPost({title: '', body: ''})
   }
   
-  
   return (
     <form>
       <MyInput value={post.title} onChange={inputTitleHandler} type='text' placeholder='post title'/>
