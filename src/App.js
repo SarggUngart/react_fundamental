@@ -1,4 +1,4 @@
-import React from "react";
+import React, {createRef} from "react";
 import './styles/App.css'
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
@@ -12,21 +12,29 @@ function App() {
   
   const [posts, setPosts] = React.useState([
     {id: 1, title: 'Java Script', body: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.'},
-    {id: 2, title: 'SQL', body: 'Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.'},
+    {
+      id: 2,
+      title: 'SQL',
+      body: 'Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
+      nodeRef: createRef()
+    },
     {
       id: 3,
       title: 'PHP',
-      body: 'В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.'
+      body: 'В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.',
+      nodeRef: createRef()
     },
     {
       id: 4,
       title: 'CSS',
-      body: 'Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн.'
+      body: 'Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн.',
+      nodeRef: createRef()
     },
     {
       id: 5,
       title: 'Redux',
-      body: 'Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.'
+      body: 'Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
+      nodeRef: createRef()
     },]
   )
   
